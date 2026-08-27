@@ -1,1265 +1,1655 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Nexus Virtual Solutions | Simulação de Entrevista RH</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-main: #F7F4EE;
-      --bg-card: #FFFFFF;
-      --bg-subtle: #EFECE4;
-      --text-main: #1F2421;
-      --text-muted: #667069;
-      --brand-primary: #1E3A8A;
-      --brand-primary-light: #EFF6FF;
-      --brand-accent: #D97706;
-      --brand-accent-light: #FEF3C7;
-      --brand-success: #15803D;
-      --brand-success-light: #DCFCE7;
-      --border-color: #E6E1D5;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-      --shadow-md: 0 4px 12px rgba(30,58,138,0.08);
-      --shadow-lg: 0 10px 25px rgba(0,0,0,0.08);
-      --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nexus Virtual Solutions | Simulação de Entrevista RH</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-page: #FAF7F2;
+            --bg-card: #FFFFFF;
+            --bg-card-subtle: #F5F1E9;
+            --bg-card-highlight: #FFFDF9;
+            
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --text-muted: #6B7280;
+            
+            --primary: #1E3A8A;
+            --primary-light: #3B82F6;
+            --primary-bg: #EFF6FF;
+            
+            --accent: #D97706;
+            --accent-light: #F59E0B;
+            --accent-bg: #FEF3C7;
+            
+            --success: #059669;
+            --success-bg: #ECFDF5;
+            --success-border: #A7F3D0;
+            
+            --border-subtle: #E5E0D8;
+            --border-hover: #D1C9BE;
+            
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 14px 36px rgba(0, 0, 0, 0.08);
+            
+            --radius-sm: 10px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-full: 9999px;
+            
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-    body {
-      font-family: var(--font-main);
-      background-color: var(--bg-main);
-      color: var(--text-main);
-      line-height: 1.5;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .view-screen {
-      display: none;
-      width: 100%;
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 16px;
-    }
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 14px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
 
-    .view-screen.active {
-      display: block;
-      animation: fadeIn 0.25s ease-out;
-    }
+        .header-container {
+            max-width: 760px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    /* TELA 1: HOME */
-    .home-header {
-      text-align: center;
-      padding: 24px 12px 16px;
-    }
+        .brand-logo {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--primary) 0%, #1E40AF 100%);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-weight: 800;
+            font-size: 18px;
+            box-shadow: 0 4px 10px rgba(30, 58, 138, 0.2);
+        }
 
-    .badge-institution {
-      display: inline-block;
-      background-color: var(--bg-subtle);
-      color: var(--brand-primary);
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 6px 14px;
-      border-radius: 999px;
-      margin-bottom: 12px;
-      border: 1px solid var(--border-color);
-    }
+        .brand-text h1 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.3px;
+            line-height: 1.2;
+        }
 
-    .home-title {
-      font-size: 1.75rem;
-      font-weight: 800;
-      color: var(--brand-primary);
-      line-height: 1.25;
-      margin-bottom: 8px;
-    }
+        .brand-text p {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
 
-    .home-subtitle {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      max-width: 580px;
-      margin: 0 auto 20px;
-    }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .card-info {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 20px;
-      margin-bottom: 16px;
-      box-shadow: var(--shadow-sm);
-    }
+        .btn-icon {
+            background-color: var(--bg-card-subtle);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            padding: 7px 12px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
 
-    .card-info-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--brand-primary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
+        .btn-icon:hover {
+            background-color: var(--border-subtle);
+            color: var(--text-primary);
+        }
 
-    .card-info p {
-      font-size: 0.9rem;
-      margin-bottom: 10px;
-    }
+        main {
+            flex: 1;
+            max-width: 760px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 16px 16px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
 
-    .card-info ul {
-      padding-left: 20px;
-      font-size: 0.88rem;
-    }
+        .status-bar {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+        }
 
-    .card-info li {
-      margin-bottom: 6px;
-    }
+        .timer-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    .author-box {
-      background: #F4EFE6;
-      border-left: 4px solid var(--brand-accent);
-      padding: 14px 16px;
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      margin: 16px 0;
-      font-size: 0.85rem;
-    }
+        .timer-display {
+            font-size: 18px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            color: var(--primary);
+            background-color: var(--primary-bg);
+            padding: 4px 10px;
+            border-radius: 8px;
+            border: 1px solid #BFDBFE;
+        }
 
-    .author-box strong {
-      color: var(--brand-primary);
-      display: block;
-      font-size: 0.95rem;
-      margin-bottom: 2px;
-    }
+        .timer-display.warning {
+            color: #DC2626;
+            background-color: #FEE2E2;
+            border-color: #FCA5A5;
+            animation: pulse 1s infinite;
+        }
 
-    .btn-start-interview {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      background: var(--brand-primary);
-      color: #FFFFFF;
-      font-family: var(--font-main);
-      font-size: 1.1rem;
-      font-weight: 700;
-      padding: 18px 24px;
-      border-radius: var(--radius-lg);
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(30, 58, 138, 0.25);
-      transition: transform 0.15s ease, background 0.15s ease;
-      margin: 24px 0 32px;
-    }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
 
-    .btn-start-interview:active {
-      transform: scale(0.98);
-      background: #172554;
-    }
+        .timer-controls {
+            display: flex;
+            gap: 6px;
+        }
 
-    /* TELA 2: SALA DE ENTREVISTA (STICKY HEADER) */
-    .interview-view-container {
-      padding-top: 0;
-      padding-bottom: 40px;
-    }
+        .btn-timer {
+            background: none;
+            border: 1px solid var(--border-subtle);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            background-color: #FFFFFF;
+        }
 
-    .sticky-top-bar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(247, 244, 238, 0.96);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      padding: 10px 16px 12px;
-      border-bottom: 1px solid var(--border-color);
-      margin: -16px -16px 16px -16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-    }
+        .candidate-tracker {
+            text-align: right;
+        }
 
-    .bar-top-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 8px;
-    }
+        .tracker-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-    .candidate-badge {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--brand-primary);
-      background: #E0E7FF;
-      padding: 4px 10px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
+        .tracker-stats {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
 
-    .bar-actions {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 2px;
+            scrollbar-width: none;
+        }
+        .category-tabs::-webkit-scrollbar {
+            display: none;
+        }
 
-    .btn-icon {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: var(--shadow-sm);
-    }
+        .tab-btn {
+            padding: 8px 14px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid var(--border-subtle);
+            background-color: var(--bg-card);
+            color: var(--text-secondary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
 
-    .timer-widget {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 8px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: var(--shadow-sm);
-    }
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: #FFFFFF;
+            border-color: var(--primary);
+            box-shadow: 0 2px 8px rgba(30, 58, 138, 0.25);
+        }
 
-    .timer-display {
-      font-size: 1.4rem;
-      font-weight: 800;
-      font-variant-numeric: tabular-nums;
-      color: var(--brand-primary);
-      letter-spacing: -0.02em;
-    }
+        .flashcard-wrapper {
+            position: relative;
+            perspective: 1000px;
+        }
 
-    .timer-display.danger {
-      color: #DC2626;
-      animation: pulse 1s infinite;
-    }
+        .flashcard {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            position: relative;
+            transition: var(--transition);
+        }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
+        .steps-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-card-subtle);
+            padding: 4px;
+            border-radius: var(--radius-full);
+            margin-bottom: 6px;
+        }
 
-    .timer-controls {
-      display: flex;
-      gap: 6px;
-    }
+        .step-item {
+            flex: 1;
+            text-align: center;
+            padding: 6px 4px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            border-radius: var(--radius-full);
+            transition: var(--transition);
+        }
 
-    .btn-timer {
-      background: var(--bg-subtle);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      font-family: var(--font-main);
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 6px 10px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-    }
+        .step-item.active {
+            background-color: #FFFFFF;
+            color: var(--primary);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
 
-    .btn-timer.primary {
-      background: var(--brand-primary);
-      color: #FFFFFF;
-      border-color: var(--brand-primary);
-    }
+        .step-item.completed {
+            color: var(--success);
+        }
 
-    .controls-panel {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 16px;
-      align-items: center;
-    }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
 
-    .btn-draw {
-      flex: 1 1 auto;
-      background: var(--brand-accent);
-      color: #FFFFFF;
-      font-family: var(--font-main);
-      font-size: 0.95rem;
-      font-weight: 700;
-      padding: 12px 18px;
-      border-radius: var(--radius-md);
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.25);
-    }
+        .badge-category {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            background-color: var(--accent-bg);
+            color: var(--accent);
+            border: 1px solid #FDE68A;
+        }
 
-    .btn-next-candidate {
-      background: var(--bg-card);
-      border: 1px solid var(--brand-primary);
-      color: var(--brand-primary);
-      font-family: var(--font-main);
-      font-size: 0.85rem;
-      font-weight: 700;
-      padding: 12px 14px;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      white-space: nowrap;
-    }
+        .badge-category.tech {
+            background-color: var(--primary-bg);
+            color: var(--primary);
+            border-color: #BFDBFE;
+        }
 
-    .pool-status {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      width: 100%;
-      text-align: center;
-      margin-top: -4px;
-      margin-bottom: 8px;
-    }
+        .q-number {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
 
-    /* CARD DA QUESTÃO */
-    .question-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.35;
+        }
 
-    .card-header-meta {
-      background: #FAF8F5;
-      padding: 14px 18px;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+        .phase-question {
+            background-color: var(--bg-card-highlight);
+            border-left: 4px solid var(--primary);
+            padding: 16px 18px;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
 
-    .category-tag {
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 999px;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
+        .rh-reader-tip {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+        }
 
-    .tag-comportamental { background: #FEF3C7; color: #92400E; }
-    .tag-tecnica { background: #EFF6FF; color: #1E40AF; }
+        .phase-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-    .step-indicator {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--brand-primary);
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      padding: 3px 8px;
-      border-radius: var(--radius-sm);
-    }
+        .option-card {
+            background-color: #FFFFFF;
+            border: 1.5px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            transition: var(--transition);
+        }
 
-    .card-body-content {
-      padding: 20px 18px;
-    }
+        .option-card.correct-highlight {
+            background-color: var(--success-bg);
+            border-color: var(--success);
+            color: #065F46;
+            font-weight: 600;
+        }
 
-    .question-theme-title {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--brand-accent);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 6px;
-    }
+        .phase-answer {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
 
-    .step-section { display: none; }
-    .step-section.active { display: block; animation: fadeIn 0.2s ease-out; }
+        .answer-badge {
+            background-color: var(--success-bg);
+            border: 1px solid var(--success-border);
+            padding: 14px 18px;
+            border-radius: var(--radius-md);
+            color: #065F46;
+        }
 
-    .question-prompt {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--text-main);
-      line-height: 1.4;
-      margin-bottom: 18px;
-    }
+        .answer-badge h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-    .instructions-rh-hint {
-      background: #F8FAFC;
-      border-left: 3px solid var(--brand-primary);
-      padding: 10px 14px;
-      font-size: 0.85rem;
-      color: #334155;
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      margin-bottom: 16px;
-    }
+        .answer-badge p {
+            font-size: 14px;
+            font-weight: 500;
+        }
 
-    .options-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 18px;
-    }
+        .rh-evaluation-box {
+            background-color: #FEF3C7;
+            border: 1px solid #FDE68A;
+            padding: 14px 18px;
+            border-radius: var(--radius-md);
+            color: #92400E;
+        }
 
-    .option-item {
-      background: var(--bg-main);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 12px 14px;
-      font-size: 0.92rem;
-      line-height: 1.35;
-      color: var(--text-main);
-    }
+        .rh-evaluation-box h4 {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
 
-    .option-item.correct-revealed {
-      background: var(--brand-success-light);
-      border-color: var(--brand-success);
-      font-weight: 600;
-      color: #14532D;
-    }
+        .rh-evaluation-box p {
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 1.45;
+        }
 
-    .answer-box {
-      background: var(--brand-success-light);
-      border: 1px solid #86EFAC;
-      border-radius: var(--radius-md);
-      padding: 14px 16px;
-      margin-bottom: 16px;
-    }
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
 
-    .answer-title {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: var(--brand-success);
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+        .btn-action {
+            flex: 1;
+            padding: 14px 18px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
 
-    .feedback-rh-box {
-      background: #F4EFE6;
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 14px 16px;
-      margin-bottom: 16px;
-    }
+        .btn-primary {
+            background-color: var(--primary);
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+        }
 
-    .feedback-rh-title {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--brand-primary);
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+        .btn-primary:hover {
+            background-color: #1E40AF;
+            transform: translateY(-1px);
+        }
 
-    .feedback-rh-text {
-      font-size: 0.88rem;
-      color: var(--text-main);
-      line-height: 1.4;
-    }
+        .btn-secondary {
+            background-color: var(--bg-card-subtle);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-subtle);
+        }
 
-    .card-footer-controls {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-    }
+        .btn-secondary:hover {
+            background-color: var(--border-subtle);
+            color: var(--text-primary);
+        }
 
-    .btn-step {
-      flex: 1;
-      font-family: var(--font-main);
-      font-size: 0.95rem;
-      font-weight: 700;
-      padding: 12px 16px;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      border: none;
-    }
+        .btn-random {
+            background: linear-gradient(135deg, var(--accent) 0%, #B45309 100%);
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25);
+        }
 
-    .btn-step-primary { background: var(--brand-primary); color: #FFFFFF; }
-    .btn-step-primary:active { background: #172554; }
-    .btn-step-secondary { background: var(--bg-subtle); color: var(--text-main); border: 1px solid var(--border-color); }
+        .btn-random:hover {
+            filter: brightness(1.05);
+            transform: translateY(-1px);
+        }
 
-    /* MODAL DE AJUDA */
-    .modal-backdrop {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.5);
-      z-index: 999;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
+        .candidate-control-bar {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: var(--shadow-sm);
+        }
 
-    .modal-backdrop.active { display: flex; animation: fadeIn 0.2s ease-out; }
+        .candidate-control-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .modal-window {
-      background: var(--bg-card);
-      border-radius: var(--radius-lg);
-      max-width: 520px;
-      width: 100%;
-      max-height: 85vh;
-      overflow-y: auto;
-      padding: 24px;
-      box-shadow: var(--shadow-lg);
-      position: relative;
-    }
+        .candidate-control-header h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
 
-    .modal-close-btn {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: var(--bg-subtle);
-      border: none;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-size: 1.1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+        .candidate-btns {
+            display: flex;
+            gap: 10px;
+        }
 
-    .modal-title {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: var(--brand-primary);
-      margin-bottom: 12px;
-    }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 200;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
 
-    .modal-content p { font-size: 0.9rem; margin-bottom: 10px; }
-    .modal-content ul { padding-left: 20px; font-size: 0.88rem; margin-bottom: 14px; }
-    .modal-content li { margin-bottom: 6px; }
+        .modal-overlay.active {
+            display: flex;
+        }
 
-    footer {
-      margin-top: auto;
-      text-align: center;
-      padding: 20px 16px;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border-color);
-      background: #F4EFE6;
-    }
-  </style>
+        .modal-content {
+            background-color: #FFFFFF;
+            border-radius: var(--radius-lg);
+            max-width: 600px;
+            width: 100%;
+            max-height: 88vh;
+            overflow-y: auto;
+            padding: 24px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 12px;
+        }
+
+        .modal-header h2 {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .modal-body {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .info-card {
+            background-color: var(--bg-page);
+            border-left: 4px solid var(--accent);
+            padding: 12px 14px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-card h4 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .rubric-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .rubric-item {
+            background-color: var(--bg-card-subtle);
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .rubric-label {
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .rubric-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 6px;
+        }
+
+        .star-btn {
+            background: #FFFFFF;
+            border: 1px solid var(--border-subtle);
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .star-btn.selected {
+            background-color: var(--accent);
+            color: #FFFFFF;
+            border-color: var(--accent);
+        }
+
+        footer {
+            text-align: center;
+            padding: 24px 16px;
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-subtle);
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+
+        footer strong {
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 480px) {
+            .card-title {
+                font-size: 16px;
+            }
+            .phase-question {
+                font-size: 15px;
+            }
+            .btn-action {
+                padding: 12px 14px;
+                font-size: 13px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- ================= TELA 1: HOME ================= -->
-  <div id="screen-home" class="view-screen active">
-    <div class="home-header">
-      <span class="badge-institution">Educação Profissional Paulista</span>
-      <h1 class="home-title">Nexus Virtual Solutions</h1>
-      <p class="home-subtitle">Simulação de Entrevista de Emprego | Processo Seletivo para Desenvolvedor(a) Júnior & Estágio</p>
-    </div>
-
-    <div class="card-info">
-      <div class="card-info-title"><span>👨‍🏫</span> Projeto Pedagógico & Autoria</div>
-      <div class="author-box">
-        <strong>Idealização e Mediação:</strong>
-        Prof. Thiago Fernando (Graduando em Engenharia de Computação | Licenciado em Matemática)
-      </div>
-      <p><strong>Componentes Integrados:</strong></p>
-      <ul>
-        <li><strong>Carreiras e Competências:</strong> Persona profissional, etiqueta corporativa, comunicação digital (e-mails/chats), postura ética e feedback.</li>
-        <li><strong>Desenvolvimento de Sistemas:</strong> Lógica de programação, vetores (listas), matrizes bidimensionais e modularização com funções em Python.</li>
-      </ul>
-    </div>
-
-    <div class="card-info">
-      <div class="card-info-title"><span>🏢</span> Sobre a Nexus Virtual Solutions</div>
-      <p>Empresa de tecnologia focada em soluções virtuais (apps, sites e softwares). Os estudantes concorrem a vagas de estágio técnico.</p>
-      <p><strong>Papel da Direção (RH):</strong> Conduzir as entrevistas de 3 a 5 minutos, avaliando a clareza, a postura e a segurança dos alunos diante das situações apresentadas.</p>
-    </div>
-
-    <div class="card-info">
-      <div class="card-info-title"><span>📋</span> Como Conduzir a Simulação</div>
-      <ul>
-        <li><strong>Tempo por aluno:</strong> 3 a 5 minutos (utilize o cronômetro no topo da tela).</li>
-        <li><strong>Passo 1:</strong> Leia a pergunta sorteada para o aluno.</li>
-        <li><strong>Passo 2:</strong> Mostre/leia as alternativas para apoiar a resposta.</li>
-        <li><strong>Passo 3:</strong> Consulte o gabarito e a dica do RH para validar a resposta e dar o feedback final de 30 segundos.</li>
-      </ul>
-    </div>
-
-    <button class="btn-start-interview" onclick="startInterviewSession()">
-      <span>Iniciar Entrevistas</span> <span>➔</span>
-    </button>
-  </div>
-
-  <!-- ================= TELA 2: SALA DE ENTREVISTA ================= -->
-  <div id="screen-interview" class="view-screen interview-view-container">
-
-    <!-- Topo Fixo com Cronômetro (Sticky) -->
-    <div class="sticky-top-bar">
-      <div class="bar-top-row">
-        <div class="candidate-badge">
-          <span>👤</span> <span id="candidate-label">Candidato #1</span>
-        </div>
-        <div class="bar-actions">
-          <button class="btn-icon" onclick="openHelpModal()" title="Instruções Rápidas">❓</button>
-          <button class="btn-icon" onclick="goToHome()" title="Voltar ao Início">🏠</button>
-        </div>
-      </div>
-
-      <div class="timer-widget">
-        <div class="timer-display" id="timer-text">03:00</div>
-        <div class="timer-controls">
-          <button class="btn-timer primary" id="btn-timer-toggle" onclick="toggleTimer()">Iniciar</button>
-          <button class="btn-timer" onclick="resetTimer(180)">3 min</button>
-          <button class="btn-timer" onclick="resetTimer(300)">5 min</button>
-          <button class="btn-timer" onclick="resetTimer(180)">↺</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Painel de Sorteio -->
-    <div class="controls-panel">
-      <button class="btn-draw" onclick="drawNewQuestion()">
-        <span>🎲</span> <span>Sortear Nova Questão</span>
-      </button>
-      <button class="btn-next-candidate" onclick="nextCandidate()">
-        <span>Próximo Aluno 👤</span>
-      </button>
-    </div>
-    <div class="pool-status" id="pool-status-text">Carregando banco de questões...</div>
-
-    <!-- Card da Questão -->
-    <div class="question-card">
-      <div class="card-header-meta">
-        <span class="category-tag tag-comportamental" id="card-category-badge">Comportamental</span>
-        <span class="step-indicator" id="step-indicator-text">Passo 1 de 3</span>
-      </div>
-
-      <div class="card-body-content">
-        <div class="question-theme-title" id="card-sub-title">Persona Profissional</div>
-
-        <!-- PASSO 1: PERGUNTA -->
-        <div id="step-1-view" class="step-section active">
-          <div class="instructions-rh-hint">
-            <strong>Instrução ao RH:</strong> Leia a pergunta abaixo de forma clara para o candidato.
-          </div>
-          <div class="question-prompt" id="question-text">
-            Clique em "Sortear Nova Questão" para começar.
-          </div>
-          <div class="card-footer-controls">
-            <button class="btn-step btn-step-primary" onclick="goToStep(2)">
-              <span>Ver Alternativas ➔</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- PASSO 2: ALTERNATIVAS -->
-        <div id="step-2-view" class="step-section">
-          <div class="instructions-rh-hint">
-            <strong>Instrução ao RH:</strong> Leia as alternativas e peça para o aluno escolher uma e justificar.
-          </div>
-          <div class="options-list" id="options-container"></div>
-          <div class="card-footer-controls">
-            <button class="btn-step btn-step-secondary" onclick="goToStep(1)">
-              <span>⬅ Voltar à Pergunta</span>
-            </button>
-            <button class="btn-step btn-step-primary" onclick="goToStep(3)">
-              <span>Ver Gabarito & Dica RH ➔</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- PASSO 3: GABARITO & DICA RH -->
-        <div id="step-3-view" class="step-section">
-          <div class="answer-box">
-            <div class="answer-title">
-              <span>✅</span> <span id="correct-option-label">Alternativa Correta: B</span>
+    <header>
+        <div class="header-container">
+            <div class="brand">
+                <div class="brand-logo">N</div>
+                <div class="brand-text">
+                    <h1>Nexus Virtual Solutions</h1>
+                    <p>Painel do Selecionador (RH) | Simulação de Entrevista</p>
+                </div>
             </div>
-            <p style="font-size: 0.9rem; color: #166534;" id="correct-option-text"></p>
-          </div>
-
-          <div class="feedback-rh-box">
-            <div class="feedback-rh-title"><span>💡</span> O que a Direção (RH) deve avaliar:</div>
-            <div class="feedback-rh-text" id="tip-rh-text"></div>
-          </div>
-
-          <div class="card-footer-controls">
-            <button class="btn-step btn-step-secondary" onclick="goToStep(2)">
-              <span>⬅ Ver Opções</span>
-            </button>
-            <button class="btn-step btn-step-primary" onclick="drawNewQuestion()">
-              <span>🎲 Próxima Questão</span>
-            </button>
-          </div>
+            <div class="header-actions">
+                <button class="btn-icon" onclick="openModal('briefingModal')">
+                    📋 <span>Instruções</span>
+                </button>
+                <button class="btn-icon" onclick="openModal('evaluationModal')">
+                    ⭐ <span>Ficha RH</span>
+                </button>
+            </div>
         </div>
+    </header>
 
-      </div>
+    <main>
+        <section class="status-bar">
+            <div class="timer-box">
+                <div class="timer-display" id="timerDisplay">03:00</div>
+                <div class="timer-controls">
+                    <button class="btn-timer" id="timerBtn" onclick="toggleTimer()">▶ Iniciar</button>
+                    <button class="btn-timer" onclick="resetTimer()">↺ Zerar</button>
+                </div>
+            </div>
+            <div class="candidate-tracker">
+                <div class="tracker-title">Questão do Candidato</div>
+                <div class="tracker-stats" id="candidateStat">Q 1 de 3</div>
+            </div>
+        </section>
+
+        <nav class="category-tabs">
+            <button class="tab-btn active" onclick="setCategoryFilter('TODAS')">Todas as Questões (<span id="totalCount">0</span>)</button>
+            <button class="tab-btn" onclick="setCategoryFilter('Comportamental')">💬 Comportamental (<span id="compCount">0</span>)</button>
+            <button class="tab-btn" onclick="setCategoryFilter('Técnica Básica')">💻 Técnica Básica (<span id="techCount">0</span>)</button>
+        </nav>
+
+        <section class="flashcard-wrapper">
+            <div class="flashcard" id="flashcard">
+                
+                <div class="steps-nav">
+                    <div class="step-item active" id="stepIndicator1">1. Pergunta</div>
+                    <div class="step-item" id="stepIndicator2">2. Alternativas</div>
+                    <div class="step-item" id="stepIndicator3">3. Gabarito & Dica RH</div>
+                </div>
+
+                <div class="card-header">
+                    <div>
+                        <span class="badge-category" id="cardBadge">Comportamental</span>
+                        <span style="font-size: 11px; color: var(--text-muted); margin-left: 6px;" id="cardSub">Apresentação</span>
+                    </div>
+                    <div class="q-number" id="cardIndexTracker">ID #1</div>
+                </div>
+
+                <h2 class="card-title" id="cardTitle">Título da Questão</h2>
+
+                <div class="phase-question" id="cardQuestion">
+                    Carregando pergunta...
+                </div>
+                <div class="rh-reader-tip" id="rhTipReader">
+                    🎙️ <em>Direção: Leia esta pergunta em voz alta para o(a) candidato(a).</em>
+                </div>
+
+                <div class="phase-options" id="optionsContainer" style="display: none;"></div>
+
+                <div class="phase-answer" id="answerContainer" style="display: none;">
+                    <div class="answer-badge">
+                        <h4>✅ Resposta Esperada: <span id="correctOptionLetter">B</span></h4>
+                        <p id="correctOptionText">Descrição da resposta correta.</p>
+                    </div>
+                    <div class="rh-evaluation-box">
+                        <h4>🎯 O que o RH deve observar na fala do aluno:</h4>
+                        <p id="rhGuidanceText">Dica para a direção avaliar a segurança, vocabulário e clareza.</p>
+                    </div>
+                </div>
+
+                <div class="card-actions">
+                    <button class="btn-action btn-secondary" id="btnBackStep" onclick="prevStep()" style="display: none;">
+                        ⬅ Voltar
+                    </button>
+                    <button class="btn-action btn-primary" id="btnNextStep" onclick="nextStep()">
+                        Ver Alternativas ➔
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="candidate-control-bar">
+            <div class="candidate-control-header">
+                <div>
+                    <h3>🎲 Sorteador Sem Repetição</h3>
+                    <p style="font-size: 12px; color: var(--text-muted);">
+                        Restam <strong id="availablePoolCount" style="color: var(--primary);">0</strong> questões inéditas no banco.
+                    </p>
+                </div>
+                <button class="btn-action btn-random" style="flex: none; padding: 10px 16px; font-size: 13px;" onclick="drawNextQuestion(true)">
+                    🎲 Sortear Próxima
+                </button>
+            </div>
+            
+            <div class="candidate-btns">
+                <button class="btn-action btn-secondary" onclick="nextCandidate()">
+                    👤 Próximo Candidato (Reset 3 Qs)
+                </button>
+                <button class="btn-action btn-secondary" style="flex: 0.6;" onclick="resetQuestionPool()" title="Reinicia todas as questões descartadas">
+                    🔄 Reiniciar Banco
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-overlay" id="briefingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🏢 Guia Rápido do Selecionador (RH)</h2>
+                <button class="btn-close" onclick="closeModal('briefingModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="info-card">
+                    <h4>Cenário da Empresa Fictícia</h4>
+                    <p>A <strong>Nexus Virtual Solutions</strong> é uma empresa que desenvolve sites, aplicativos mobile e sistemas em nuvem. Vocês (Direção da Escola) estão entrevistando candidatos para vagas de <strong>Estágio / Desenvolvedor(a) Júnior</strong>.</p>
+                </div>
+
+                <div class="info-card" style="border-left-color: var(--primary);">
+                    <h4>Como conduzir a simulação em 3 minutos:</h4>
+                    <ol style="margin-left: 18px; font-size: 13px;">
+                        <li><strong>Acolhimento (30s):</strong> Dê boas-vindas ao aluno e inicie o cronômetro no topo.</li>
+                        <li><strong>Perguntas (2 min):</strong> Faça 2 a 3 perguntas sorteadas pelo app.</li>
+                        <li><strong>Dica Pedagógica:</strong> O foco principal é a <strong>segurança, comunicação clara, honestidade e sociabilidade</strong>.</li>
+                        <li><strong>Fechamento & Feedback (30s):</strong> Utilize o método Sanduíche: 1 elogio sincero, 1 ponto a lapidar e 1 incentivo!</li>
+                    </ol>
+                </div>
+                
+                <p style="font-size: 12px; color: var(--text-muted); text-align: center;">
+                    <em>Idealizado pelo Prof. Thiago Fernando para a formação integral dos estudantes.</em>
+                </p>
+            </div>
+            <button class="btn-action btn-primary" onclick="closeModal('briefingModal')">Entendido, Voltar à Entrevista</button>
+        </div>
     </div>
-  </div>
 
-  <!-- ================= MODAL DE AJUDA ================= -->
-  <div id="help-modal" class="modal-backdrop" onclick="closeHelpModalOnBackdrop(event)">
-    <div class="modal-window">
-      <button class="modal-close-btn" onclick="closeHelpModal()">✕</button>
-      <h2 class="modal-title">Guia Rápido do Entrevistador (RH)</h2>
-      <div class="modal-content">
-        <p><strong>🎯 Objetivo:</strong> Proporcionar aos estudantes uma vivência acolhedora e real de entrevista corporativa em tecnologia.</p>
-        <p><strong>⏱️ Gestão do Tempo (3 a 5 min):</strong></p>
-        <ul>
-          <li><strong>1 min:</strong> Apresentação pessoal e quebra-gelo.</li>
-          <li><strong>2 a 3 min:</strong> 1 ou 2 perguntas sorteadas pelo app.</li>
-          <li><strong>30 seg:</strong> Feedback final rápido (Elogio + Ponto de melhoria).</li>
-        </ul>
-        <p><strong>💡 Foco de Avaliação:</strong></p>
-        <ul>
-          <li><strong>Comunicação:</strong> Clareza, ausência de gírias excessivas.</li>
-          <li><strong>Postura:</strong> Contato visual e firmeza.</li>
-          <li><strong>Maturidade:</strong> Acolhimento de correções e honestidade.</li>
-        </ul>
-      </div>
+    <div class="modal-overlay" id="evaluationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>⭐ Ficha Rápida de Avaliação (1 Minuto)</h2>
+                <button class="btn-close" onclick="closeModal('evaluationModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 13px;">Use esta rubrica rápida para avaliar a desenvoltura geral do candidato durante a entrevista:</p>
+                
+                <div class="rubric-grid">
+                    <div class="rubric-item">
+                        <span class="rubric-label">1. Postura & Comunicação Oral</span>
+                        <div class="rubric-desc">Clareza na fala, contato visual, ausência de gírias excessivas e formalidade suave.</div>
+                        <div class="star-rating">
+                            <button class="star-btn" onclick="rate(this)">1</button>
+                            <button class="star-btn" onclick="rate(this)">2</button>
+                            <button class="star-btn" onclick="rate(this)">3</button>
+                            <button class="star-btn" onclick="rate(this)">4</button>
+                            <button class="star-btn selected" onclick="rate(this)">5</button>
+                        </div>
+                    </div>
+
+                    <div class="rubric-item">
+                        <span class="rubric-label">2. Raciocínio Lógico & Conceitos de TI</span>
+                        <div class="rubric-desc">Compreensão de funções (receita), listas/vetores e organização de dados.</div>
+                        <div class="star-rating">
+                            <button class="star-btn" onclick="rate(this)">1</button>
+                            <button class="star-btn" onclick="rate(this)">2</button>
+                            <button class="star-btn" onclick="rate(this)">3</button>
+                            <button class="star-btn selected" onclick="rate(this)">4</button>
+                            <button class="star-btn" onclick="rate(this)">5</button>
+                        </div>
+                    </div>
+
+                    <div class="rubric-item">
+                        <span class="rubric-label">3. Maturidade & Recepção de Feedback</span>
+                        <div class="rubric-desc">Mentalidade de crescimento ao lidar com erros e disposição para aprender.</div>
+                        <div class="star-rating">
+                            <button class="star-btn" onclick="rate(this)">1</button>
+                            <button class="star-btn" onclick="rate(this)">2</button>
+                            <button class="star-btn" onclick="rate(this)">3</button>
+                            <button class="star-btn selected" onclick="rate(this)">4</button>
+                            <button class="star-btn" onclick="rate(this)">5</button>
+                        </div>
+                    </div>
+
+                    <div class="rubric-item">
+                        <span class="rubric-label">4. Proatividade & Ética</span>
+                        <div class="rubric-desc">Iniciativa para propor soluções e respeito à confidencialidade e prazos.</div>
+                        <div class="star-rating">
+                            <button class="star-btn" onclick="rate(this)">1</button>
+                            <button class="star-btn" onclick="rate(this)">2</button>
+                            <button class="star-btn" onclick="rate(this)">3</button>
+                            <button class="star-btn" onclick="rate(this)">4</button>
+                            <button class="star-btn selected" onclick="rate(this)">5</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card" style="background-color: var(--success-bg); border-left-color: var(--success);">
+                    <h4 style="color: #065F46;">Dica para o Feedback Final (30 segundos):</h4>
+                    <p style="color: #065F46; font-size: 13px;"><em>"Parabéns pela sua segurança na resposta sobre [ponto forte]. Como sugestão para sua carreira, busque apenas [ponto a lapidar]. Temos certeza de que você terá muito sucesso!"</em></p>
+                </div>
+            </div>
+            <button class="btn-action btn-primary" onclick="closeModal('evaluationModal')">Fechar Ficha</button>
+        </div>
     </div>
-  </div>
 
-  <footer>
-    Nexus Virtual Solutions • Simulação de Entrevistas<br>
-    Prof. Thiago Fernando • Educação Profissional Paulista
-  </footer>
+    <footer>
+        <p><strong>Simulação de Recrutamento & Seleção</strong> | Educação Profissional Paulista</p>
+        <p style="margin-top: 4px;">Mediação Pedagógica: <strong>Prof. Thiago Fernando</strong> (Graduando em Eng. de Computação | Licenciado em Matemática)</p>
+    </footer>
 
-  <!-- ================= JAVASCRIPT: LÓGICA COMPLETA ================= -->
-  <script>
-    const QUESTIONS_DATA = [
-      {
-        id: 1, category: "Comportamental", sub: "Persona Profissional", title: "Apresentação Pessoal em Entrevista",
-        question: "Ao iniciar a entrevista e ser solicitado(a) a falar sobre você, qual postura e comunicação são as mais adequadas?",
-        options: [
-          "A) Falar de forma muito informal com gírias: 'tipo assim, eu faço várias coisas e ajudo geral lá'.",
-          "B) Apresentar-se com clareza, destacando seus estudos, facilidade em equipe e experiências na escola.",
-          "C) Ficar de braços cruzados e responder apenas com 'não sei o que falar'.",
-          "D) Focar apenas em desabafos sobre problemas pessoais e vida íntima."
-        ],
-        correct: "B", tip_rh: "Avalie se o candidato fala com clareza, bom tom de voz e postura madura, valorizando sua trajetória escolar."
-      },
-      {
-        id: 2, category: "Comportamental", sub: "Dress Code & Imagem", title: "Código de Vestimenta na Área de TI",
-        question: "Sobre o Dress Code (código de vestimenta) em empresas de desenvolvimento de software, o que é correto afirmar?",
-        options: [
-          "A) É obrigatório usar terno e gravata todos os dias em qualquer empresa de tecnologia.",
-          "B) Roupas não importam no trabalho; higiene e bom senso são totalmente irrelevantes.",
-          "C) Varia conforme a cultura da empresa; no setor de TI costuma ser casual/flexível, mantendo o bom senso e a higiene.",
-          "D) O código de vestimenta só se aplica para diretores da empresa."
-        ],
-        correct: "C", tip_rh: "O candidato deve demonstrar que compreende adequação ao contexto, higiene pessoal e equilíbrio entre conforto e profissionalismo."
-      },
-      {
-        id: 3, category: "Comportamental", sub: "Linguagem Corporal", title: "Comunicação Não-Verbal e Postura",
-        question: "Durante a entrevista, de que forma a postura corporal e o contato visual influenciam a percepção do entrevistador?",
-        options: [
-          "A) Não influenciam em nada; o entrevistador só presta atenção nas palavras exatas.",
-          "B) Manter contato visual, postura ereta e atenção transmite segurança, respeito e interesse genuíno na vaga.",
-          "C) Olhar fixamente para o celular durante a conversa mostra que você é multitarefa.",
-          "D) Sentar-se debruçado na mesa transmite ar de autoridade e liderança."
-        ],
-        correct: "B", tip_rh: "Observe a linguagem corporal do aluno: contato visual com a banca, postura confiante e escuta atenta."
-      },
-      {
-        id: 4, category: "Comportamental", sub: "Etiqueta Diária", title: "Postura em Reuniões de Equipe",
-        question: "Durante uma reunião para definir o lançamento de um site, um colega ao lado puxa conversas paralelas insistentes. Como você age?",
-        options: [
-          "A) Entra na conversa paralela e ri alto com o colega.",
-          "B) Grita no meio da sala exigindo silêncio imediato.",
-          "C) Mantém a atenção no líder e sinaliza discretamente ao colega para conversarem após o término da reunião.",
-          "D) Levanta e vai embora sem dar explicações."
-        ],
-        correct: "C", tip_rh: "Avalie o bom senso, a maturidade para evitar conflitos desnecessários e o respeito ao tempo da equipe."
-      },
-      {
-        id: 5, category: "Comportamental", sub: "Comunicação Digital", title: "O 'Efeito Suspense' no Chat Corporativo",
-        question: "Por que mandar apenas 'Oi, tudo bem?' no WhatsApp/Teams e sumir sem explicar o assunto é uma má prática?",
-        options: [
-          "A) Porque gera ansiedade no colega, interrompe a produtividade e atrasa a resolução da demanda.",
-          "B) Porque o aplicativo cobra taxa extra por cada mensagem enviada.",
-          "C) Porque o gestor é obrigado a responder em menos de 10 segundos.",
-          "D) Não é má prática; é a forma mais formal e elegante de iniciar conversas."
-        ],
-        correct: "A", tip_rh: "O aluno deve entender o conceito de assertividade: enviar a saudação acompanhada do contexto e da dúvida na mesma mensagem."
-      },
-      {
-        id: 6, category: "Comportamental", sub: "Comunicação Digital", title: "Boas Práticas no Uso de Áudios",
-        question: "Qual é a recomendação para o envio de mensagens de áudio em canais profissionais de trabalho?",
-        options: [
-          "A) Enviar sempre áudios longos de 10 minutos para não precisar digitar.",
-          "B) Priorizar mensagens de texto claras; caso precise enviar áudio, pedir autorização prévia e ser breve e objetivo.",
-          "C) Mandar áudios com barulho de trânsito ao fundo para provar que está em deslocamento.",
-          "D) Substituir todos os relatórios escritos por áudios no WhatsApp."
-        ],
-        correct: "B", tip_rh: "O candidato deve valorizar a facilidade de busca e a clareza das mensagens de texto no ambiente de trabalho."
-      },
-      {
-        id: 7, category: "Comportamental", sub: "Formalidade Suave", title: "A Arte da Formalidade Suave",
-        question: "O que caracteriza o estilo de 'formalidade suave' trabalhado na comunicação profissional?",
-        options: [
-          "A) Usar gerundismos excessivos como 'estaremos solicitando a verificação'.",
-          "B) Ser educado, claro e direto ao ponto, evitando tanto gírias exageradas quanto formalidades arcaicas.",
-          "C) Falar de forma excessivamente íntima como se estivesse em um churrasco de família.",
-          "D) Responder todas as mensagens usando apenas figurinhas e emojis."
-        ],
-        correct: "B", tip_rh: "Destaque da aula: equilíbrio, clareza e naturalidade sem informalidade desrespeitosa nem rebuscamento."
-      },
-      {
-        id: 8, category: "Comportamental", sub: "E-mail Corporativo", title: "Anatomia do Assunto de um E-mail",
-        question: "Ao enviar uma atualização do código de um aplicativo para seu gestor, qual assunto de e-mail é o mais profissional?",
-        options: [
-          "A) Assunto: 'olha ae'",
-          "B) Assunto em branco (sem título)",
-          "C) Assunto: '[Atualização] Módulo de Cadastro - Versão 1.2'",
-          "D) Assunto: 'URGENTE LEIA POR FAVOR ME RESPONDE'"
-        ],
-        correct: "C", tip_rh: "Um bom assunto de e-mail resume o tema e a prioridade, facilitando a organização do destinatário."
-      },
-      {
-        id: 9, category: "Comportamental", sub: "E-mail Corporativo", title: "Cuidado com o 'Responder a Todos'",
-        question: "Quando você DEVE EVITAR usar a opção 'Responder a Todos' em uma conversa por e-mail?",
-        options: [
-          "A) Quando a informação for relevante para todos os envolvidos no projeto.",
-          "B) Quando a resposta for apenas um agradecimento simples ou uma dúvida pontual direcionada a quem enviou.",
-          "C) Quando o líder pedir para manter a equipe informada.",
-          "D) Em caso de alteração no cronograma geral do sistema."
-        ],
-        correct: "B", tip_rh: "Evitar poluição desnecessária na caixa de entrada dos colegas de equipe."
-      },
-      {
-        id: 10, category: "Comportamental", sub: "Comunicação Digital", title: "Respeito ao Horário de Expediente",
-        question: "Você finalizou uma tarefa do sistema às 23h30. Qual é a conduta mais adequada para avisar o gestor?",
-        options: [
-          "A) Ligar várias vezes para o celular pessoal dele até ele atender.",
-          "B) Mandar mensagem no WhatsApp particular exigindo confirmação de leitura imediata.",
-          "C) Registrar o commit no repositório ou programar a mensagem/e-mail para o início do horário comercial no dia seguinte.",
-          "D) Publicar no grupo de bate-papo informal da empresa cobrando retorno."
-        ],
-        correct: "C", tip_rh: "Observe a consciência sobre etiqueta profissional e respeito aos momentos de descanso da equipe."
-      },
-      {
-        id: 11, category: "Comportamental", sub: "Feedback Profissional", title: "Recepção de Feedback e Mentalidade de Crescimento",
-        question: "O líder técnico revisou seu código e disse: 'A sua lógica funciona, mas está desorganizada e precisa ser refatorada'. Como você reage?",
-        options: [
-          "A) Fica bravo(a), diz que o líder não entende nada e se recusa a alterar o código.",
-          "B) Recebe com mentalidade de crescimento, agradece a orientação e pede dicas para melhorar a estrutura.",
-          "C) Diz que 'funcionando é o que importa' e abandona a tarefa.",
-          "D) Fica em silêncio, mas não faz nenhuma alteração no código."
-        ],
-        correct: "B", tip_rh: "Capacidade de receber feedback construtivo sem defensividade, enxergando oportunidade de evolução técnica."
-      },
-      {
-        id: 12, category: "Comportamental", sub: "Feedback Profissional", title: "O Modelo SCI de Feedback",
-        question: "O que propõe o modelo SCI (Situação, Comportamento, Impacto) ao analisar um problema no trabalho?",
-        options: [
-          "A) Fazer ataques à personalidade do colega na frente de todos.",
-          "B) Descrever o contexto exato (Situação), a atitude observada (Comportamento) e o resultado gerado (Impacto), com foco em fatos.",
-          "C) Inventar boatos sobre o colega para que o chefe tome uma atitude.",
-          "D) Mandar um bilhete anônimo desrespeitoso."
-        ],
-        correct: "B", tip_rh: "O feedback deve ser objetivo, respeitoso e livre de julgamentos pessoais."
-      },
-      {
-        id: 13, category: "Comportamental", sub: "Ética Profissional", title: "Sigilo e Proteção de Dados de Clientes",
-        question: "Ao testar o banco de dados de um aplicativo, você tem acesso a senhas e dados confidenciais de clientes. Qual é a conduta ética?",
-        options: [
-          "A) Compartilhar os dados nos grupos de amigos para mostrar que tem acesso restrito.",
-          "B) Manter sigilo absoluto e utilizar os dados estritamente para os testes autorizados do sistema.",
-          "C) Enviar mensagens pessoais para os clientes através das redes sociais.",
-          "D) Vender as informações de contato para empresas de propaganda."
-        ],
-        correct: "B", tip_rh: "Consciência clara sobre ética, compliance, privacidade de dados e segurança da informação."
-      },
-      {
-        id: 14, category: "Comportamental", sub: "Ética Profissional", title: "Responsabilidade por Erros no Sistema",
-        question: "Você cometeu um engano ao alterar uma linha de código e a página de login parou de funcionar. Qual é a atitude correta?",
-        options: [
-          "A) Colocar a culpa no colega novato para não ser advertido.",
-          "B) Tentar apagar os logs e fingir que não sabe o que aconteceu.",
-          "C) Assumir o erro com transparência, reportar imediatamente e ajudar na correção.",
-          "D) Desligar o computador e ir embora para casa."
-        ],
-        correct: "C", tip_rh: "Transparência e maturidade ao assumir responsabilidades por falhas, focando na solução rápida."
-      },
-      {
-        id: 15, category: "Comportamental", sub: "Proatividade", title: "Iniciativa Diante de um Erro no App",
-        question: "Você notou que um botão do aplicativo está com um pequeno atraso para responder. O que representa uma atitude proativa?",
-        options: [
-          "A) Esperar os clientes reclamarem na loja de aplicativos para ver se é sério.",
-          "B) Investigar a causa básica, documentar o problema e apresentar ao gestor já com uma sugestão de melhoria.",
-          "C) Reclamar com os colegas que o aplicativo é ruim.",
-          "D) Ignorar o fato, pois você foi contratado apenas para desenhar telas."
-        ],
-        correct: "B", tip_rh: "Proatividade é identificar o problema com antecedência e propor caminhos práticos de solução."
-      },
-      {
-        id: 16, category: "Comportamental", sub: "Proatividade", title: "Comunicação Preventiva de Prazos",
-        question: "Você percebeu que não conseguirá entregar uma tela no prazo combinado devido a uma dúvida técnica. O que fazer?",
-        options: [
-          "A) Avisar a liderança com antecedência, explicar o obstáculo e solicitar apoio para alinhar o prazo.",
-          "B) Esperar vencer o prazo e só falar se alguém vier cobrar.",
-          "C) Entregar a tela incompleta e sem funcionar só para cumprir o dia.",
-          "D) Faltar no dia da entrega para evitar explicações."
-        ],
-        correct: "A", tip_rh: "Demonstração de responsabilidade com os compromissos da equipe e clareza na comunicação."
-      },
-      {
-        id: 17, category: "Técnica", sub: "Vetores (Listas)", title: "Por que Usar Vetores em um Sistema?",
-        question: "Em uma loja virtual com 50 produtos, por que usamos um vetor (lista) em vez de criar 50 variáveis soltas (p1, p2, p3...)?",
-        options: [
-          "A) Porque o computador trava se criarmos mais de cinco variáveis.",
-          "B) Porque o vetor armazena vários valores relacionados em uma única estrutura, facilitando a organização e o uso de laços de repetição.",
-          "C) Porque o Python proíbe criar variáveis individuais.",
-          "D) Porque listas servem apenas para somar notas escolares."
-        ],
-        correct: "B", tip_rh: "O candidato deve explicar a vantagem de agrupar dados em sequência para facilitar o processamento em lote."
-      },
-      {
-        id: 18, category: "Técnica", sub: "Vetores (Listas)", title: "Indexação Base 0 em Programação",
-        question: "Dada a lista `jogos = ['Mario', 'Zelda', 'Sonic']`, qual comando acessa o primeiro jogo ('Mario') em Python?",
-        options: [
-          "A) `jogos[1]`",
-          "B) `jogos[0]`",
-          "C) `jogos['primeiro']`",
-          "D) `jogos.item(1)`"
-        ],
-        correct: "B", tip_rh: "Regra fundamental das aulas: em programação, os índices começam no zero (Base 0)."
-      },
-      {
-        id: 19, category: "Técnica", sub: "Vetores (Listas)", title: "Erro de Índice Fora da Faixa (IndexError)",
-        question: "Se uma lista tem 3 elementos (`nomes = ['Ana', 'Bia', 'Caio']`), o que ocorre se tentarmos acessar `nomes`?",
-        options: [
-          "A) O Python inventa dois nomes vazios automaticamente.",
-          "B) O sistema retorna zero sem avisar nada.",
-          "C) Ocorre um erro de índice fora dos limites (`IndexError`), pois a posição 5 não existe.",
-          "D) O programa apaga os arquivos do sistema."
-        ],
-        correct: "C", tip_rh: "Conhecimento sobre os limites válidos de uma lista (de 0 até tamanho - 1)."
-      },
-      {
-        id: 20, category: "Técnica", sub: "Vetores (Listas)", title: "Função len() em Python",
-        question: "Para que serve a função `len(minha_lista)` ao manipular dados em Python?",
-        options: [
-          "A) Para apagar todos os itens da lista.",
-          "B) Para retornar a quantidade total de elementos dentro da lista.",
-          "C) Para ordenar os números em ordem decrescente.",
-          "D) Para imprimir a lista na impressora."
-        ],
-        correct: "B", tip_rh: "A função `len()` retorna o tamanho da lista, essencial para laços de repetição."
-      },
-      {
-        id: 21, category: "Técnica", sub: "Vetores (Listas)", title: "Percorrendo Itens com o Laço for",
-        question: "Qual é a forma mais prática de exibir todos os nomes de uma lista de clientes na tela?",
-        options: [
-          "A) Utilizar um laço `for nome in lista:` para iterar automaticamente sobre cada elemento.",
-          "B) Escrever um comando `print()` manual para cada posição da lista.",
-          "C) Copiar e colar a lista 50 vezes no código.",
-          "D) O Python não consegue ler listas inteiras."
-        ],
-        correct: "A", tip_rh: "O aluno deve reconhecer o uso do loop `for` para percurso sequencial automatizado."
-      },
-      {
-        id: 22, category: "Técnica", sub: "Vetores (Listas)", title: "Conceito de Busca Linear",
-        question: "Como funciona o algoritmo de 'Busca Linear' para encontrar um item em uma lista?",
-        options: [
-          "A) O computador sorteia posições aleatórias até acertar.",
-          "B) O programa percorre a lista elemento por elemento, do início ao fim, comparando se o item atual é o procurado.",
-          "C) O sistema apaga a lista e recria apenas com o item buscado.",
-          "D) É uma busca que só funciona se os dados estiverem criptografados."
-        ],
-        correct: "B", tip_rh: "Busca linear é a verificação sequencial item a item em uma coleção de dados."
-      },
-      {
-        id: 23, category: "Técnica", sub: "Matrizes Bidimensionais", title: "Quando Usar uma Matriz (2D)?",
-        question: "Quando uma matriz bidimensional é mais recomendada do que um vetor unidimensional simples?",
-        options: [
-          "A) Quando temos apenas uma lista simples de compras.",
-          "B) Quando precisamos organizar dados em formato de tabela com linhas e colunas (ex: planilha, tabuleiro ou notas por matéria).",
-          "C) Quando o programa não utiliza números.",
-          "D) Matrizes não são usadas na área de sistemas."
-        ],
-        correct: "B", tip_rh: "Diferença conceitual: vetor = 1 dimensão (sequência simples); matriz = 2 dimensões (tabela com linhas e colunas)."
-      },
-      {
-        id: 24, category: "Técnica", sub: "Matrizes Bidimensionais", title: "Acesso por Linha e Coluna",
-        question: "Como acessamos um elemento localizado na Linha 1 e Coluna 2 de uma matriz em Python?",
-        options: [
-          "A) `matriz[coluna, linha]`",
-          "B) `matriz`",
-          "C) `matriz(1)(2)`",
-          "D) `matriz.posicao(1, 2)`"
-        ],
-        correct: "B", tip_rh: "Sintaxe padrão: `matriz[linha][coluna]`, lembrando que ambos começam em zero."
-      },
-      {
-        id: 25, category: "Técnica", sub: "Matrizes Bidimensionais", title: "Laços Aninhados em Matrizes",
-        question: "Por que usamos dois laços de repetição (laços aninhados) para percorrer uma matriz completa?",
-        options: [
-          "A) Porque um laço percorre as linhas e o outro percorre as colunas/elementos de cada linha.",
-          "B) Porque o computador precisa de dois laços para não travar.",
-          "C) Porque o primeiro laço calcula a raiz quadrada e o segundo imprime.",
-          "D) Não é necessário dois laços; um laço simples lê qualquer matriz."
-        ],
-        correct: "A", tip_rh: "Loop externo controla as linhas; loop interno percorre os elementos de cada coluna."
-      },
-      {
-        id: 26, category: "Técnica", sub: "Matrizes Bidimensionais", title: "Agregação de Dados em Matrizes",
-        question: "Em uma tabela de vendas organizada em matriz, o que significa fazer a 'agregação de dados'?",
-        options: [
-          "A) Excluir todas as vendas cadastradas.",
-          "B) Resumir múltiplos valores em informações consolidadas, como calcular o total vendido ou a média de uma coluna.",
-          "C) Alterar a fonte do texto do programa.",
-          "D) Converter todos os números em letras."
-        ],
-        correct: "B", tip_rh: "Agregação = somar, calcular média, encontrar maior/menor valor em uma estrutura de dados."
-      },
-      {
-        id: 27, category: "Técnica", sub: "Funções & Modularização", title: "Conceito de Função (Analogia da Receita)",
-        question: "Nas aulas de lógica, por que uma função (`def`) é comparada a uma 'receita de bolo'?",
-        options: [
-          "A) Porque ela só pode ser executada uma única vez na história do programa.",
-          "B) Porque é um bloco de código que você escreve uma vez e pode executar sempre que precisar, sem ter que reescrever tudo do zero.",
-          "C) Porque funções em Python servem exclusivamente para sites de culinária.",
-          "D) Porque é obrigatório colocar farinha e ovos no computador."
-        ],
-        correct: "B", tip_rh: "Analogia central da aula: escreve o bloco uma vez (receita) e reutiliza várias vezes (faz o bolo)."
-      },
-      {
-        id: 28, category: "Técnica", sub: "Funções & Modularização", title: "Definir versus Chamar uma Função",
-        question: "Qual a diferença entre 'definir uma função' e 'chamar uma função' em Python?",
-        options: [
-          "A) São exatamente a mesma coisa.",
-          "B) Definir é criar o código da função (`def saudacao():`); chamar é executar esse código (`saudacao()`).",
-          "C) Chamar é quando ocorre um erro e definir é quando o código compila.",
-          "D) Definir é em português e chamar é em inglês."
-        ],
-        correct: "B", tip_rh: "O aluno deve entender que `def` cria o molde, e os parênteses `()` colocam o bloco em ação."
-      },
-      {
-        id: 29, category: "Técnica", sub: "Funções & Modularização", title: "Parâmetros em Funções",
-        question: "Em uma função `calcular_media(nota1, nota2)`, o que representam `nota1` e `nota2`?",
-        options: [
-          "A) São comentários que o programa não lê.",
-          "B) São parâmetros (portas de entrada) que recebem os valores externos necessários para o cálculo.",
-          "C) São comandos para fechar o sistema operacional.",
-          "D) São textos fixos que nunca mudam."
-        ],
-        correct: "B", tip_rh: "Parâmetros permitem que a função receba dados diferentes a cada chamada."
-      },
-      {
-        id: 30, category: "Técnica", sub: "Funções & Modularização", title: "O Comando return",
-        question: "Qual é a função da palavra-chave `return` dentro de uma função em Python?",
-        options: [
-          "A) Desligar o monitor do computador.",
-          "B) Encerrar a função e devolver o valor calculado para a parte do programa que a chamou.",
-          "C) Reiniciar o programa do início.",
-          "D) Imprimir o texto na tela obrigatoriamente."
-        ],
-        correct: "B", tip_rh: "`return` envia o resultado da função de volta para o código principal."
-      },
-      {
-        id: 31, category: "Técnica", sub: "Funções & Modularização", title: "Escopo de Variáveis (Local x Global)",
-        question: "O que acontece com uma variável criada DENTRO de uma função (variável local) após a função terminar?",
-        options: [
-          "A) Ela se torna global e pode ser acessada em qualquer arquivo.",
-          "B) Ela é apagada da memória e não pode ser acessada fora da função.",
-          "C) Ela é gravada no banco de dados automaticamente.",
-          "D) O programa trava com tela azul."
-        ],
-        correct: "B", tip_rh: "Escopo local: a variável 'vive' e existe apenas dentro da execução daquela função específica."
-      },
-      {
-        id: 32, category: "Técnica", sub: "Funções & Modularização", title: "Vantagem da Modularização para Manutenção",
-        question: "Se a regra de cálculo de desconto de uma loja mudar, qual a grande vantagem do código estar modularizado com funções?",
-        options: [
-          "A) Ter que reescrever todo o sistema do zero.",
-          "B) Precisar alterar a fórmula em um único lugar: dentro da função responsável pelo cálculo.",
-          "C) Nenhuma vantagem, modularização é apenas estética.",
-          "D) Não precisar fazer nada porque o Python adivinha a nova regra."
-        ],
-        correct: "B", tip_rh: "Manutenção centralizada e reaproveitamento de código são os pilares da engenharia de software."
-      }
-    ];
+    <script>
+        const QUESTIONS_DATA = [
+            {
+                "id": 1,
+                "category": "Comportamental",
+                "sub": "Persona Profissional",
+                "title": "Apresentação Pessoal em Entrevista",
+                "question": "Ao iniciar a entrevista e ser convidado(a) a falar um pouco sobre você e seus interesses, qual postura e fala são as mais adequadas?",
+                "options": [
+                    "A) Falar de forma muito informal, dizendo apenas: 'Tipo assim... eu faço várias coisas, ajudo geral lá e sou bem de boa'.",
+                    "B) Apresentar-se com clareza e respeito, destacando seus estudos na escola técnica, facilidade de trabalhar em equipe e motivação para aprender.",
+                    "C) Dizer apenas 'Não sei muito o que falar' e esperar o entrevistador adivinhar.",
+                    "D) Focar em assuntos puramente íntimos e reclamações sobre tarefas anteriores."
+                ],
+                "correct": "B",
+                "tip_rh": "Observe a oratória, a segurança e a capacidade de conectar os estudos escolares ao interesse na empresa de tecnologia. Evite premiar respostas vagas com excesso de gírias."
+            },
+            {
+                "id": 2,
+                "category": "Comportamental",
+                "sub": "Dress Code & Imagem",
+                "title": "Código de Vestimenta na Área de TI",
+                "question": "Sobre o Dress Code (código de vestimenta) em empresas modernas de desenvolvimento de software, o que é correto afirmar?",
+                "options": [
+                    "A) É obrigatório o uso de terno e gravata todos os dias para qualquer programador.",
+                    "B) As roupas não importam nada, podendo trabalhar sem qualquer critério ou cuidado.",
+                    "C) Geralmente segue um estilo casual ou business casual (flexível e confortável), mantendo sempre o bom senso, a higiene e o alinhamento com a cultura da empresa.",
+                    "D) É uma regra fixa idêntica em absolutamente todas as empresas do mundo."
+                ],
+                "correct": "C",
+                "tip_rh": "O candidato deve demonstrar que a imagem profissional envolve bom senso, higiene e adequação à cultura do ambiente de trabalho."
+            },
+            {
+                "id": 3,
+                "category": "Comportamental",
+                "sub": "Linguagem Corporal",
+                "title": "Comunicação Não-Verbal e Postura",
+                "question": "Durante a conversa com os selecionadores, qual atitude corporal transmite mais profissionalismo e confiança?",
+                "options": [
+                    "A) Olhar nos olhos dos entrevistadores, manter a postura ereta e demonstrar atenção ativa.",
+                    "B) Ficar mexendo no celular e digitando mensagens durante as perguntas.",
+                    "C) Ficar de braços cruzados olhando para o teto ou para o chão.",
+                    "D) Ficar com a cabeça debruçada sobre a mesa."
+                ],
+                "correct": "A",
+                "tip_rh": "Avalie a presença e postura do aluno na cadeira: contato visual, serenidade e atenção aos entrevistadores."
+            },
+            {
+                "id": 4,
+                "category": "Comportamental",
+                "sub": "Etiqueta Corporativa",
+                "title": "Postura em Reuniões de Equipe",
+                "question": "Em uma reunião de alinhamento com o time sobre a entrega de um sistema, um colega ao lado inicia conversas paralelas insistentes. Como você age?",
+                "options": [
+                    "A) Entra na conversa paralela e começa a rir alto.",
+                    "B) Grita no meio da reunião expondo o colega para o gestor.",
+                    "C) Mantém a atenção na reunião e sinaliza discretamente ao colega para conversarem no momento oportuno após a reunião.",
+                    "D) Levanta-se e vai embora da sala sem avisar ninguém."
+                ],
+                "correct": "C",
+                "tip_rh": "Demonstra maturidade, respeito à liderança e equilíbrio nas relações interpessoais sem criar conflitos desnecessários."
+            },
+            {
+                "id": 5,
+                "category": "Comportamental",
+                "sub": "Comunicação Digital",
+                "title": "O 'Efeito Suspense' no Chat Profissional",
+                "question": "Por que enviar apenas 'Oi, tudo bem?' no Teams/WhatsApp de trabalho e aguardar a resposta para só depois falar o assunto é uma prática ruim?",
+                "options": [
+                    "A) Porque interrompe a concentração do colega, gera ansiedade e atrasa a solução da dúvida.",
+                    "B) Porque o aplicativo bloqueia o usuário após enviar duas mensagens seguidas.",
+                    "C) Porque não é permitido dar 'bom dia' no ambiente corporativo.",
+                    "D) Não é uma prática ruim; é o padrão exigido por lei."
+                ],
+                "correct": "A",
+                "tip_rh": "Conceito trabalhado em aula: assertividade é enviar a saudação + o contexto + a dúvida objetiva na mesma mensagem para economizar tempo."
+            },
+            {
+                "id": 6,
+                "category": "Comportamental",
+                "sub": "Comunicação Digital",
+                "title": "Boas Práticas no Envio de Áudios",
+                "question": "Qual é a recomendação sobre o uso de áudios no WhatsApp profissional da empresa?",
+                "options": [
+                    "A) Enviar sempre áudios de mais de 4 minutos em vez de escrever.",
+                    "B) Priorizar mensagens de texto claras e objetivas; caso o áudio seja realmente necessário, perguntar antes se o colega pode ouvir e ser suscinto.",
+                    "C) Mandar áudios com música alta ou barulho ao fundo.",
+                    "D) Enviar áudios na madrugada para adiantar o serviço do dia seguinte."
+                ],
+                "correct": "B",
+                "tip_rh": "Verifique se o candidato entende que a mensagem de texto facilita a busca de informações e não interrompe reuniões alheias."
+            },
+            {
+                "id": 7,
+                "category": "Comportamental",
+                "sub": "Formalidade Suave",
+                "title": "A Arte da Formalidade Suave",
+                "question": "O que caracteriza a chamada 'formalidade suave' na comunicação com gestores e clientes?",
+                "options": [
+                    "A) Linguagem excessivamente rebuscada e cheia de gerundismos ('estaremos verificando').",
+                    "B) Uma comunicação educada, respeitosa, clara e direta, sem gírias infantis e sem frieza ou artificialidade.",
+                    "C) Conversar usando apelidos e gírias de rua como se fossem amigos de infância.",
+                    "D) Comunicar-se apenas enviando memes e figurinhas."
+                ],
+                "correct": "B",
+                "tip_rh": "O candidato deve valorizar a clareza, a simplicidade e a educação sem soar robótico ou desleixado."
+            },
+            {
+                "id": 8,
+                "category": "Comportamental",
+                "sub": "E-mail Corporativo",
+                "title": "Assunto Preciso em E-mails",
+                "question": "Ao enviar uma atualização do aplicativo para validação da diretoria, qual é o melhor título/assunto para o e-mail?",
+                "options": [
+                    "A) 'Olha aí o negócio'",
+                    "B) '(Sem Assunto)'",
+                    "C) '[Validação] Módulo de Cadastro de Usuários - Versão 1.2'",
+                    "D) 'URGENTE LEIA POR FAVOR HOJE'"
+                ],
+                "correct": "C",
+                "tip_rh": "O assunto correto resume o objetivo entre colchetes, o tema específico e a versão, facilitando a organização da caixa de entrada."
+            },
+            {
+                "id": 9,
+                "category": "Comportamental",
+                "sub": "E-mail Corporativo",
+                "title": "Uso Cauteloso do 'Responder a Todos'",
+                "question": "Quando você DEVE EVITAR utilizar a opção 'Responder a Todos' em uma conversa por e-mail?",
+                "options": [
+                    "A) Quando a informação for relevante para todo o time do projeto.",
+                    "B) Quando a resposta for apenas um 'Obrigado(a)' pessoal ou uma dúvida pontual direcionada somente ao remetente.",
+                    "C) Quando o diretor pedir para todos confirmarem a presença.",
+                    "D) Quando o e-mail tiver sido enviado para um grupo de avisos gerais."
+                ],
+                "correct": "B",
+                "tip_rh": "Evita lotar a caixa de correio de dezenas de colaboradores com mensagens que não dizem respeito a eles."
+            },
+            {
+                "id": 10,
+                "category": "Comportamental",
+                "sub": "Comunicação Digital",
+                "title": "Horários de Comunicação e Respeito ao Descanso",
+                "question": "Você terminou uma tarefa no código às 23h de uma terça-feira. Como deve proceder para avisar o líder da equipe?",
+                "options": [
+                    "A) Ligar no telefone particular do líder até ele atender.",
+                    "B) Enviar mensagens no WhatsApp marcando como urgente com vários pontos de exclamação.",
+                    "C) Registrar a entrega na ferramenta de tarefas ou programar o e-mail/mensagem para o início do horário comercial na manhã seguinte.",
+                    "D) Postar nos stories das redes sociais cobrando retorno da empresa."
+                ],
+                "correct": "C",
+                "tip_rh": "Demonstra maturidade em relação ao respeito aos limites de trabalho e equilíbrio profissional."
+            },
+            {
+                "id": 11,
+                "category": "Comportamental",
+                "sub": "Feedback Profissional",
+                "title": "Mentalidade de Crescimento ao Receber Correções",
+                "question": "Seu gestor revisou seu primeiro projeto e apontou que as telas precisam de melhorias visuais e ajustes na lógica. Qual é a reação esperada de um profissional?",
+                "options": [
+                    "A) Ficar irritado, dizer que o gestor está com perseguição e não mexer no projeto.",
+                    "B) Ouvir com atenção, entender os pontos levantados como oportunidade de evolução (mentalidade de crescimento) e pedir orientações práticas.",
+                    "C) Dizer que vai refazer, mas ignorar todas as sugestões.",
+                    "D) Desistir da vaga e pedir demissão no mesmo dia."
+                ],
+                "correct": "B",
+                "tip_rh": "Capacidade essencial: maturidade emocional para receber feedback construtivo sem adotar postura defensiva."
+            },
+            {
+                "id": 12,
+                "category": "Comportamental",
+                "sub": "Feedback Profissional",
+                "title": "O Modelo SCI (Situação, Comportamento, Impacto)",
+                "question": "Ao dar um retorno sobre o trabalho de um colega usando o modelo SCI, o que você deve destacar?",
+                "options": [
+                    "A) Julgamentos sobre o caráter ou personalidade da pessoa.",
+                    "B) Fatos objetivos: o contexto (Situação), a atitude observada (Comportamento) e a consequência para o projeto (Impacto).",
+                    "C) Comentários sarcásticos na frente dos outros membros da equipe.",
+                    "D) Apenas fofocas ouvidas nos corredores."
+                ],
+                "correct": "B",
+                "tip_rh": "O feedback de qualidade é técnico e baseado em fatos concretos, mantendo o respeito e a parceria."
+            },
+            {
+                "id": 13,
+                "category": "Comportamental",
+                "sub": "Ética & Compliance",
+                "title": "Sigilo e Confidencialidade de Dados",
+                "question": "Durante os testes de um sistema, você encontra dados reais de clientes (endereços, CPFs, senhas). Qual é a sua responsabilidade ética?",
+                "options": [
+                    "A) Salvar os dados no pendrive pessoal para mostrar aos amigos.",
+                    "B) Manter total confidencialidade e sigilo, utilizando os dados estritamente para o teste autorizado e seguindo as normas da empresa.",
+                    "C) Compartilhar prints das informações em grupos de redes sociais.",
+                    "D) Utilizar os contatos para oferecer serviços particulares."
+                ],
+                "correct": "B",
+                "tip_rh": "Avalie o compromisso com a ética, compliance e respeito à privacidade de dados (LGPD)."
+            },
+            {
+                "id": 14,
+                "category": "Comportamental",
+                "sub": "Ética Profissional",
+                "title": "Transparência ao Cometer um Erro",
+                "question": "Você cometeu um engano no código e uma página importante do site ficou fora do ar. Qual é a conduta ética correta?",
+                "options": [
+                    "A) Culpar outro colega de equipe para não levar bronca.",
+                    "B) Apagar os registros e fingir que foi um ataque hacker externo.",
+                    "C) Assumir o erro com transparência, comunicar o líder imediatamente e focar em encontrar a solução rápida.",
+                    "D) Não falar nada e esperar alguém descobrir por conta própria."
+                ],
+                "correct": "C",
+                "tip_rh": "Assumir responsabilidades por falhas e focar na solução constrói confiança sólida com a liderança."
+            },
+            {
+                "id": 15,
+                "category": "Comportamental",
+                "sub": "Proatividade",
+                "title": "Proatividade na Solução de Problemas",
+                "question": "Você notou que os clientes estão tendo dificuldades para encontrar o botão de 'Finalizar Pedido' no site. O que é uma postura proativa?",
+                "options": [
+                    "A) Ignorar o fato, pois você não foi contratado para cuidar de design.",
+                    "B) Analisar o problema, documentar onde os usuários estão travando e sugerir uma melhoria prática ao gestor.",
+                    "C) Reclamar nas redes sociais que a empresa faz sistemas ruins.",
+                    "D) Aguardar a chefia notar a queda nas vendas para fazer algo."
+                ],
+                "correct": "B",
+                "tip_rh": "Proatividade é antecipar problemas e propor soluções viáveis antes que virem prejuízo."
+            },
+            {
+                "id": 16,
+                "category": "Comportamental",
+                "sub": "Proatividade",
+                "title": "Gestão de Prazos e Imprevistos",
+                "question": "Sua máquina de trabalho apresentou um defeito técnico e você não conseguirá entregar a tarefa no prazo combinado. O que fazer?",
+                "options": [
+                    "A) Avisar a liderança imediatamente, explicar o ocorrido com clareza e propor um novo prazo viável.",
+                    "B) Deixar o prazo vencer e esperar o gestor vir perguntar o que aconteceu.",
+                    "C) Faltar na data da entrega para evitar cobranças.",
+                    "D) Dizer que entregou tudo perfeitamente mesmo sem ter feito."
+                ],
+                "correct": "A",
+                "tip_rh": "Demonstra responsabilidade, comunicação preventiva e respeito com o cronograma da equipe."
+            },
+            {
+                "id": 17,
+                "category": "Técnica Básica",
+                "sub": "Vetores (Listas)",
+                "title": "Por que Usar Vetores (Listas)?",
+                "question": "Em um sistema que gerencia 50 produtos, por que usamos uma lista/vetor em vez de criar 50 variáveis soltas (prod1, prod2, prod3...)?",
+                "options": [
+                    "A) Porque o computador não aceita nomes de variáveis que terminem em números.",
+                    "B) Porque o vetor armazena múltiplos dados relacionados em uma única estrutura, tornando o código mais limpo, organizado e fácil de percorrer.",
+                    "C) Porque variáveis normais são apagadas após 1 minuto de uso.",
+                    "D) Porque vetores só servem para somar notas de matemática."
+                ],
+                "correct": "B",
+                "tip_rh": "Conceito visto na Semana 15: vetores agrupam dados do mesmo tipo facilitando o processamento em lote."
+            },
+            {
+                "id": 18,
+                "category": "Técnica Básica",
+                "sub": "Vetores (Listas)",
+                "title": "Indexação Base 0 em Programação",
+                "question": "Dada a lista `linguagens = ['Python', 'JavaScript', 'HTML']`, qual comando acessa o primeiro elemento ('Python')?",
+                "options": [
+                    "A) `linguagens[1]`",
+                    "B) `linguagens[0]`",
+                    "C) `linguagens['primeiro']`",
+                    "D) `linguagens.primeiro()`"
+                ],
+                "correct": "B",
+                "tip_rh": "Regra básica universal: no Python e na maioria das linguagens, os índices começam no 0. O primeiro item é sempre `[0]`."
+            },
+            {
+                "id": 19,
+                "category": "Técnica Básica",
+                "sub": "Vetores (Listas)",
+                "title": "Erro de Índice Fora da Faixa (IndexError)",
+                "question": "Se temos a lista `itens = ['Mouse', 'Teclado']` (tamanho 2) e tentamos executar `print(itens)`, o que acontece?",
+                "options": [
+                    "A) O programa cria 3 espaços em branco automaticamente.",
+                    "B) Ocorre um erro de índice fora do limite (`IndexError`), pois a posição 5 não existe na lista.",
+                    "C) O programa imprime a palavra 'Mouse' repetida.",
+                    "D) O computador reinicia sozinho."
+                ],
+                "correct": "B",
+                "tip_rh": "O aluno deve entender que os índices válidos vão de 0 até tamanho-1 (neste caso, índices 0 e 1)."
+            },
+            {
+                "id": 20,
+                "category": "Técnica Básica",
+                "sub": "Vetores (Listas)",
+                "title": "A Função len() em Python",
+                "question": "Para que serve a função nativa `len(minha_lista)` ao manipular dados no sistema?",
+                "options": [
+                    "A) Para apagar os dados da lista.",
+                    "B) Para retornar a quantidade total de elementos presentes na lista.",
+                    "C) Para somar todos os valores numéricos da lista.",
+                    "D) Para duplicar os valores da lista."
+                ],
+                "correct": "B",
+                "tip_rh": "Função fundamental para saber o tamanho de vetores e controlar laços de repetição com segurança."
+            },
+            {
+                "id": 21,
+                "category": "Técnica Básica",
+                "sub": "Vetores (Listas)",
+                "title": "Percorrendo uma Lista com Laço for",
+                "question": "Qual comando é o mais prático e elegante para exibir na tela todos os nomes cadastrados na lista `alunos`?",
+                "options": [
+                    "A) `for aluno in alunos: print(aluno)`",
+                    "B) Escrever 50 comandos `print()` manuais um embaixo do outro.",
+                    "C) Usar um comando `if` para cada nome.",
+                    "D) Criar uma função para cada aluno cadastrado."
+                ],
+                "correct": "A",
+                "tip_rh": "O candidato deve reconhecer o laço `for` como a estrutura padrão para percurso sequencial de listas."
+            },
+            {
+                "id": 22,
+                "category": "Técnica Básica",
+                "sub": "Vetores (Listas)",
+                "title": "Algoritmo de Busca Linear",
+                "question": "Como funciona o método de 'Busca Linear' para encontrar um produto em uma lista de estoque?",
+                "options": [
+                    "A) O sistema adivinha a posição usando inteligência artificial instantânea.",
+                    "B) O programa percorre a lista elemento por elemento, do início ao fim, comparando cada item até encontrar o que procura.",
+                    "C) O sistema apaga todos os produtos diferentes até sobrar apenas o desejado.",
+                    "D) Só funciona se a lista estiver em ordem decrescente."
+                ],
+                "correct": "B",
+                "tip_rh": "Conceito trabalhado na Semana 15 Aula 3: percorrer a lista sequencialmente comparando elemento por elemento."
+            },
+            {
+                "id": 23,
+                "category": "Técnica Básica",
+                "sub": "Matrizes Bidimensionais",
+                "title": "Quando Usar Matriz em vez de Vetor?",
+                "question": "Em qual das situações abaixo uma matriz bidimensional (tabela 2D) é mais indicada do que um vetor comum?",
+                "options": [
+                    "A) Para guardar apenas uma lista simples com os nomes dos dias da semana.",
+                    "B) Para organizar uma tabela de notas contendo vários alunos e várias disciplinas (linhas e colunas).",
+                    "C) Para armazenar a idade de uma única pessoa.",
+                    "D) Para calcular o dobro de um número inteiro."
+                ],
+                "correct": "B",
+                "tip_rh": "Diferença conceitual: vetor = 1 dimensão linear; matriz = 2 dimensões (tabela com linhas e colunas / lista de listas)."
+            },
+            {
+                "id": 24,
+                "category": "Técnica Básica",
+                "sub": "Matrizes Bidimensionais",
+                "title": "Acessando Posições em uma Matriz",
+                "question": "Em Python, representamos matrizes como listas de listas. Como acessamos o elemento que está na linha 1 e coluna 2?",
+                "options":`",
+                    "B) `matriz`",
+                    "C) `matriz(1)(2)`",
+                    "D) `matriz.linha(1).coluna(2)`"
+                ],
+                "correct": "B",
+                "tip_rh": "Sintaxe correta: primeiro colchete para a linha, segundo colchete para a coluna: `matriz[linha][coluna]`."
+            },
+            {
+                "id": 25,
+                "category": "Técnica Básica",
+                "sub": "Matrizes Bidimensionais",
+                "title": "Laços Aninhados em Matrizes",
+                "question": "Por que usamos dois laços `for` (um dentro do outro) ao processar uma matriz?",
+                "options": [
+                    "A) Porque o primeiro laço percorre as linhas e o segundo laço percorre os elementos (colunas) de cada linha.",
+                    "B) Porque um laço serve para somar e o outro para subtrair.",
+                    "C) Porque o Python obriga a ter dois laços para o código não travar.",
+                    "D) Na verdade, matrizes só podem ser lidas sem laços."
+                ],
+                "correct": "A",
+                "tip_rh": "Compreensão de laços aninhados: estrutura essencial para varrer grades e tabelas bidimensionais."
+            },
+            {
+                "id": 26,
+                "category": "Técnica Básica",
+                "sub": "Matrizes Bidimensionais",
+                "title": "Agregação de Dados em Matrizes",
+                "question": "Em uma planilha de vendas de uma loja representada por uma matriz, o que significa 'agregar dados'?",
+                "options": [
+                    "A) Excluir todas as linhas da matriz.",
+                    "B) Resumir vários dados numéricos em informações consolidadas, como calcular a soma total ou a média de vendas de um mês.",
+                    "C) Trocar os nomes das variáveis por letras maiúsculas.",
+                    "D) Adicionar novas telas no aplicativo."
+                ],
+                "correct": "B",
+                "tip_rh": "Conceito da Semana 16 Aula 3: transformar registros detalhados em estatísticas (soma, média, valor máximo)."
+            },
+            {
+                "id": 27,
+                "category": "Técnica Básica",
+                "sub": "Funções & Modularização",
+                "title": "O que é uma Função (Analogia da Receita)?",
+                "question": "Por que dizemos que uma função (`def`) na programação é semelhante a uma 'receita de bolo'?",
+                "options": [
+                    "A) Porque ela só pode ser executada uma única vez e depois desaparece.",
+                    "B) Porque é um bloco de código que você escreve uma vez e pode executar (chamar) sempre que precisar, sem ter que reescrever todos os passos.",
+                    "C) Porque funções só servem para calcular ingredientes de culinária.",
+                    "D) Porque ela é executada automaticamente sem ninguém chamar."
+                ],
+                "correct": "B",
+                "tip_rh": "Analogia clássica das aulas: define a receita uma vez, invoca para assar o bolo quantas vezes for necessário."
+            },
+            {
+                "id": 28,
+                "category": "Técnica Básica",
+                "sub": "Funções & Modularização",
+                "title": "Definição vs. Chamada de Função",
+                "question": "Qual é a diferença entre 'definir' e 'chamar' uma função em Python?",
+                "options": [
+                    "A) Não existe diferença; os dois termos significam a mesma coisa.",
+                    "B) 'Definir' é escrever o código da função com `def nome():`; 'chamar' é colocar o nome com parênteses `nome()` para que ela seja executada.",
+                    "C) 'Definir' é para números e 'chamar' é para textos.",
+                    "D) 'Chamar' é quando o programa dá erro e 'definir' é quando compila."
+                ],
+                "correct": "B",
+                "tip_rh": "O candidato deve saber que a definição apenas guarda as instruções na memória, enquanto a chamada efetivamente executa o bloco."
+            },
+            {
+                "id": 29,
+                "category": "Técnica Básica",
+                "sub": "Funções & Modularização",
+                "title": "O que são Parâmetros em uma Função?",
+                "question": "Na função `def calcular_salario(horas_trabalhadas, valor_hora):`, o que são `horas_trabalhadas` e `valor_hora`?",
+                "options": [
+                    "A) São parâmetros (portas de entrada) que recebem valores externos para a função poder realizar a conta.",
+                    "B) São comentários que o computador ignora.",
+                    "C) São erros de digitação do desenvolvedor.",
+                    "D) São variáveis que só podem valer zero."
+                ],
+                "correct": "A",
+                "tip_rh": "Parâmetros permitem que a função receba dados diferentes a cada chamada, tornando-a reutilizável e dinâmica."
+            },
+            {
+                "id": 30,
+                "category": "Técnica Básica",
+                "sub": "Funções & Modularização",
+                "title": "O Comando return",
+                "question": "Para que serve a palavra-chave `return` dentro de uma função?",
+                "options": [
+                    "A) Para reiniciar o computador.",
+                    "B) Para finalizar a função e devolver o valor calculado para a parte do programa que fez a chamada.",
+                    "C) Para apagar o código da tela.",
+                    "D) Para pausar o programa para o almoço."
+                ],
+                "correct": "B",
+                "tip_rh": "O comando `return` envia o resultado da função de volta para o algoritmo principal poder armazenar ou exibir."
+            },
+            {
+                "id": 31,
+                "category": "Técnica Básica",
+                "sub": "Funções & Modularização",
+                "title": "Escopo de Variáveis (Local vs Global)",
+                "question": "O que acontece com uma variável que é criada DENTRO de uma função (variável local) após o término da função?",
+                "options": [
+                    "A) Ela se torna pública para toda a internet.",
+                    "B) Ela é destruída da memória e não pode mais ser acessada pelo restante do programa.",
+                    "C) Ela é salva em um arquivo de texto no disco rígido.",
+                    "D) Ela impede que outras funções sejam criadas."
+                ],
+                "correct": "B",
+                "tip_rh": "Conceito de escopo local: a variável 'vive' apenas durante a execução da função onde foi declarada."
+            },
+            {
+                "id": 32,
+                "category": "Técnica Básica",
+                "sub": "Funções & Modularização",
+                "title": "Modularização e Manutenção do Código",
+                "question": "Se a regra de cálculo de desconto de uma loja mudar de 5% para 10%, qual é a grande vantagem do código estar modularizado com funções?",
+                "options": [
+                    "A) Precisar alterar a fórmula apenas em um único lugar: dentro da função responsável pelo cálculo.",
+                    "B) Ter que procurar e alterar a regra em dezenas de arquivos e centenas de linhas manuais.",
+                    "C) Não precisar fazer nada porque a função adivinha a nova regra por telepatia.",
+                    "D) O programa fica mais lento quando tem funções."
+                ],
+                "correct": "A",
+                "tip_rh": "A modularização centraliza as regras de negócio, facilitando correções e manutenções futuras sem retrabalho."
+            },
+            {
+                "id": 33,
+                "category": "Comportamental",
+                "sub": "Ética no Código",
+                "title": "Uso Ético de Códigos de Terceiros",
+                "question": "Ao encontrar um trecho de código na internet ou usar uma ferramenta de IA para resolver um problema do projeto da empresa, qual a conduta adequada?",
+                "options": [
+                    "A) Copiar e colar sem entender nada do que o código faz e sem citar referências.",
+                    "B) Compreender o funcionamento do código, testá-lo, adaptá-lo à realidade do projeto e respeitar licenças e políticas de segurança da empresa.",
+                    "C) Dizer para a diretoria que você inventou aquela tecnologia do zero.",
+                    "D) Enviar dados confidenciais de clientes para ferramentas públicas de IA."
+                ],
+                "correct": "B",
+                "tip_rh": "Maturidade técnica: usar referências e IA com responsabilidade, segurança e entendimento do código."
+            },
+            {
+                "id": 34,
+                "category": "Técnica Básica",
+                "sub": "Lógica & Boas Práticas",
+                "title": "Nomes Claros de Variáveis e Funções",
+                "question": "Por que nomes descritivos como `calcular_media()` e `lista_alunos` são muito melhores do que `func1()` e `x`?",
+                "options": [
+                    "A) Porque tornam o código legível, facilitando para que você e sua equipe entendam o programa no futuro.",
+                    "B) Porque o Python só executa funções com nomes compridos.",
+                    "C) Porque nomes curtos gastam mais energia do processador.",
+                    "D) Não há diferença; qualquer nome serve igualmente."
+                ],
+                "correct": "A",
+                "tip_rh": "Legibilidade e boas práticas: código limpo economiza tempo de toda a equipe de desenvolvimento."
+            }
+        ];
 
-    let availableQuestions = [...QUESTIONS_DATA];
-    let usedQuestions = [];
-    let currentQuestion = null;
-    let candidateCount = 1;
+        let currentFilter = 'TODAS';
+        let availablePool = [];
+        let usedPool = [];
+        let currentQuestion = null;
+        let currentStep = 1;
+        let candidateQuestionCount = 1;
 
-    let timerDuration = 180;
-    let timerRemaining = 180;
-    let timerInterval = null;
-    let isTimerRunning = false;
+        let timerSeconds = 180;
+        let timerInterval = null;
+        let isTimerRunning = false;
 
-    function showScreen(screenId) {
-      document.querySelectorAll('.view-screen').forEach(s => s.classList.remove('active'));
-      const target = document.getElementById(screenId);
-      if (target) {
-        target.classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    }
-
-    function startInterviewSession() {
-      showScreen('screen-interview');
-      if (!currentQuestion) {
-        drawNewQuestion();
-      }
-      resetTimer(180);
-    }
-
-    function goToHome() {
-      if (confirm('Deseja voltar para a página inicial de apresentação?')) {
-        pauseTimer();
-        showScreen('screen-home');
-      }
-    }
-
-    function updatePoolStatus() {
-      const statusEl = document.getElementById('pool-status-text');
-      statusEl.innerHTML = `Banco: <strong>${availableQuestions.length}</strong> disponíveis | <strong>${usedQuestions.length}</strong> realizadas`;
-    }
-
-    function drawNewQuestion() {
-      if (availableQuestions.length === 0) {
-        alert('Todas as 32 questões do banco já foram sorteadas! O banco será reiniciado automaticamente para novas rodadas.');
-        availableQuestions = [...QUESTIONS_DATA];
-        usedQuestions = [];
-      }
-
-      const randomIndex = Math.floor(Math.random() * availableQuestions.length);
-      currentQuestion = availableQuestions.splice(randomIndex, 1)[0];
-      usedQuestions.push(currentQuestion);
-
-      renderQuestionCard(currentQuestion);
-      updatePoolStatus();
-      goToStep(1);
-    }
-
-    function renderQuestionCard(q) {
-      const catBadge = document.getElementById('card-category-badge');
-      catBadge.textContent = q.category;
-      catBadge.className = 'category-tag ' + (q.category === 'Comportamental' ? 'tag-comportamental' : 'tag-tecnica');
-
-      document.getElementById('card-sub-title').textContent = `${q.sub} • ${q.title}`;
-      document.getElementById('question-text').textContent = q.question;
-
-      const optionsContainer = document.getElementById('options-container');
-      optionsContainer.innerHTML = '';
-      q.options.forEach(opt => {
-        const optDiv = document.createElement('div');
-        optDiv.className = 'option-item';
-        optDiv.textContent = opt;
-        if (opt.startsWith(q.correct + ')')) {
-          optDiv.dataset.isCorrect = "true";
-        }
-        optionsContainer.appendChild(optDiv);
-      });
-
-      const correctOptText = q.options.find(o => o.startsWith(q.correct + ')')) || '';
-      document.getElementById('correct-option-label').textContent = `Alternativa Correta: ${q.correct}`;
-      document.getElementById('correct-option-text').textContent = correctOptText;
-      document.getElementById('tip-rh-text').textContent = q.tip_rh;
-    }
-
-    function goToStep(stepNum) {
-      document.querySelectorAll('.step-section').forEach(el => el.classList.remove('active'));
-      const targetStep = document.getElementById(`step-${stepNum}-view`);
-      if (targetStep) targetStep.classList.add('active');
-
-      document.getElementById('step-indicator-text').textContent = `Passo ${stepNum} de 3`;
-
-      if (stepNum === 3) {
-        document.querySelectorAll('.option-item').forEach(item => {
-          if (item.dataset.isCorrect === "true") {
-            item.classList.add('correct-revealed');
-          }
+        window.addEventListener('DOMContentLoaded', () => {
+            updateCounts();
+            resetQuestionPool();
+            drawNextQuestion(false);
         });
-      }
-    }
 
-    function nextCandidate() {
-      candidateCount++;
-      document.getElementById('candidate-label').textContent = `Candidato #${candidateCount}`;
-      resetTimer(180);
-      drawNewQuestion();
-    }
-
-    function formatTime(seconds) {
-      const mins = Math.floor(seconds / 60);
-      const secs = seconds % 60;
-      return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    }
-
-    function updateTimerDisplay() {
-      const display = document.getElementById('timer-text');
-      display.textContent = formatTime(timerRemaining);
-      if (timerRemaining <= 30 && timerRemaining > 0) {
-        display.classList.add('danger');
-      } else {
-        display.classList.remove('danger');
-      }
-    }
-
-    function toggleTimer() {
-      if (isTimerRunning) pauseTimer();
-      else startTimer();
-    }
-
-    function startTimer() {
-      if (isTimerRunning) return;
-      isTimerRunning = true;
-      document.getElementById('btn-timer-toggle').textContent = 'Pausar';
-      timerInterval = setInterval(() => {
-        if (timerRemaining > 0) {
-          timerRemaining--;
-          updateTimerDisplay();
-        } else {
-          pauseTimer();
-          alert('⏱️ Tempo limite de entrevista atingido para este candidato!');
+        function updateCounts() {
+            document.getElementById('totalCount').innerText = QUESTIONS_DATA.length;
+            document.getElementById('compCount').innerText = QUESTIONS_DATA.filter(q => q.category === 'Comportamental').length;
+            document.getElementById('techCount').innerText = QUESTIONS_DATA.filter(q => q.category === 'Técnica Básica').length;
         }
-      }, 1000);
-    }
 
-    function pauseTimer() {
-      isTimerRunning = false;
-      clearInterval(timerInterval);
-      const btn = document.getElementById('btn-timer-toggle');
-      if (btn) btn.textContent = 'Iniciar';
-    }
+        function resetQuestionPool() {
+            const filtered = (currentFilter === 'TODAS') 
+                ? QUESTIONS_DATA 
+                : QUESTIONS_DATA.filter(q => q.category === currentFilter);
+            
+            availablePool = filtered.map(q => q.id);
+            usedPool = [];
+            updatePoolDisplay();
+        }
 
-    function resetTimer(seconds = 180) {
-      pauseTimer();
-      timerDuration = seconds;
-      timerRemaining = seconds;
-      updateTimerDisplay();
-    }
+        function updatePoolDisplay() {
+            document.getElementById('availablePoolCount').innerText = availablePool.length;
+        }
 
-    function openHelpModal() { document.getElementById('help-modal').classList.add('active'); }
-    function closeHelpModal() { document.getElementById('help-modal').classList.remove('active'); }
-    function closeHelpModalOnBackdrop(e) { if (e.target.id === 'help-modal') closeHelpModal(); }
+        function setCategoryFilter(category) {
+            currentFilter = category;
+            
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                if (btn.innerText.includes(category) || (category === 'TODAS' && btn.innerText.includes('Todas'))) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
 
-    document.addEventListener('DOMContentLoaded', () => { updatePoolStatus(); });
-  </script>
+            resetQuestionPool();
+            drawNextQuestion(false);
+        }
+
+        function drawNextQuestion(incrementCount = true) {
+            if (availablePool.length === 0) {
+                alert('Todas as questões desta categoria já foram sorteadas! O banco será reiniciado automaticamente para novas rodadas.');
+                resetQuestionPool();
+            }
+
+            const randomIndex = Math.floor(Math.random() * availablePool.length);
+            const questionId = availablePool[randomIndex];
+
+            availablePool.splice(randomIndex, 1);
+            usedPool.push(questionId);
+            updatePoolDisplay();
+
+            currentQuestion = QUESTIONS_DATA.find(q => q.id === questionId);
+            
+            if (incrementCount) {
+                candidateQuestionCount = (candidateQuestionCount % 3) + 1;
+            }
+            document.getElementById('candidateStat').innerText = `Q ${candidateQuestionCount} de 3`;
+
+            setStep(1);
+            renderCard();
+        }
+
+        function nextCandidate() {
+            candidateQuestionCount = 1;
+            document.getElementById('candidateStat').innerText = `Q 1 de 3`;
+            resetTimer();
+            drawNextQuestion(false);
+        }
+
+        function renderCard() {
+            if (!currentQuestion) return;
+
+            const badgeEl = document.getElementById('cardBadge');
+            badgeEl.innerText = currentQuestion.category;
+            if (currentQuestion.category === 'Técnica Básica') {
+                badgeEl.classList.add('tech');
+            } else {
+                badgeEl.classList.remove('tech');
+            }
+
+            document.getElementById('cardSub').innerText = currentQuestion.sub;
+            document.getElementById('cardIndexTracker').innerText = `ID #${currentQuestion.id}`;
+            document.getElementById('cardTitle').innerText = currentQuestion.title;
+            document.getElementById('cardQuestion').innerText = currentQuestion.question;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            currentQuestion.options.forEach(opt => {
+                const optLetter = opt.substring(0, 1);
+                const optEl = document.createElement('div');
+                optEl.className = 'option-card';
+                optEl.id = `opt_${optLetter}`;
+                optEl.innerHTML = `<strong>${optLetter})</strong> <span>${opt.substring(3)}</span>`;
+                optionsContainer.appendChild(optEl);
+            });
+
+            const correctLetter = currentQuestion.correct;
+            document.getElementById('correctOptionLetter').innerText = correctLetter;
+            const fullCorrect = currentQuestion.options.find(o => o.startsWith(correctLetter));
+            document.getElementById('correctOptionText').innerText = fullCorrect ? fullCorrect.substring(3) : '';
+            document.getElementById('rhGuidanceText').innerText = currentQuestion.tip_rh;
+        }
+
+        function setStep(step) {
+            currentStep = step;
+
+            document.getElementById('stepIndicator1').className = (step === 1) ? 'step-item active' : (step > 1 ? 'step-item completed' : 'step-item');
+            document.getElementById('stepIndicator2').className = (step === 2) ? 'step-item active' : (step > 2 ? 'step-item completed' : 'step-item');
+            document.getElementById('stepIndicator3').className = (step === 3) ? 'step-item active' : 'step-item';
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            const answerContainer = document.getElementById('answerContainer');
+            const btnBack = document.getElementById('btnBackStep');
+            const btnNext = document.getElementById('btnNextStep');
+            const rhTipReader = document.getElementById('rhTipReader');
+
+            if (step === 1) {
+                optionsContainer.style.display = 'none';
+                answerContainer.style.display = 'none';
+                btnBack.style.display = 'none';
+                btnNext.innerText = 'Ver Alternativas ➔';
+                rhTipReader.style.display = 'flex';
+                document.querySelectorAll('.option-card').forEach(el => el.classList.remove('correct-highlight'));
+            } else if (step === 2) {
+                optionsContainer.style.display = 'flex';
+                answerContainer.style.display = 'none';
+                btnBack.style.display = 'block';
+                btnNext.innerText = 'Ver Gabarito & Guia RH ➔';
+                rhTipReader.style.display = 'none';
+                document.querySelectorAll('.option-card').forEach(el => el.classList.remove('correct-highlight'));
+            } else if (step === 3) {
+                optionsContainer.style.display = 'flex';
+                answerContainer.style.display = 'flex';
+                btnBack.style.display = 'block';
+                btnNext.innerText = '🎲 Próxima Questão';
+                rhTipReader.style.display = 'none';
+                const correctEl = document.getElementById(`opt_${currentQuestion.correct}`);
+                if (correctEl) correctEl.classList.add('correct-highlight');
+            }
+        }
+
+        function nextStep() {
+            if (currentStep === 1) {
+                setStep(2);
+            } else if (currentStep === 2) {
+                setStep(3);
+            } else if (currentStep === 3) {
+                drawNextQuestion(true);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                setStep(currentStep - 1);
+            }
+        }
+
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function updateTimerDisplay() {
+            const display = document.getElementById('timerDisplay');
+            display.innerText = formatTime(timerSeconds);
+            if (timerSeconds <= 30 && timerSeconds > 0) {
+                display.classList.add('warning');
+            } else {
+                display.classList.remove('warning');
+            }
+        }
+
+        function toggleTimer() {
+            const btn = document.getElementById('timerBtn');
+            if (isTimerRunning) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+                btn.innerText = '▶ Continuar';
+            } else {
+                isTimerRunning = true;
+                btn.innerText = '⏸ Pausar';
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        isTimerRunning = false;
+                        btn.innerText = '⏰ Tempo Esgotado';
+                        alert('Tempo da entrevista (3 minutos) concluído! Hora do feedback rápido.');
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            timerSeconds = 180;
+            document.getElementById('timerBtn').innerText = '▶ Iniciar';
+            updateTimerDisplay();
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        function rate(btn) {
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.star-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+    </script>
 </body>
 </html>
